@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bus Ticket Booking</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2 id="title">🚌 Bus Ticket Booking</h2>
+
+    <div class="top-bar">
+      <span id="welcome"></span>
+      <div class="top-actions">
+        <button class="btn small-btn" id="themeBtn" onclick="toggleTheme()">Toggle Dark/Light</button>
+        <button class="btn small-btn" id="langBtn" onclick="switchLanguage()">Switch Language</button>
+        <button class="btn small-btn" onclick="logoutUser()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Route selection -->
+    <label id="route-label">Choose Route:</label>
+    <select id="route" onchange="refreshSeatLocks(); renderBuses(this.value.split('|')[0], document.getElementById('busList')); showFeedback(this.value.split('|')[0]);">
+      <option value="Dhaka → Pabna|800">Dhaka → Pabna (৳800)</option>
+      <option value="Dhaka → Jhenaidah|600">Dhaka → Jhenaidah (৳600)</option>
+      <option value="Dhaka → Madaripur|500">Dhaka → Madaripur (৳500)</option>
+      <option value="Dhaka → Chittagong|900">Dhaka → Chittagong (৳900)</option>
+      <option value="Jhenaidah → Pabna|550">Jhenaidah → Pabna (৳550)</option>
+      <option value="Barishal → Pabna|700">Barishal → Pabna (৳700)</option>
+    </select>
+
+    <!-- Bus selection (4 per route) -->
+    <label id="bus-label">Choose Bus:</label>
+    <select id="busList" onchange="refreshSeatLocks()">
+      <!-- Buses will be dynamically populated -->
+    </select>
+
+    <!-- Date -->
+    <label id="date-label">Select Date:</label>
+    <input type="date" id="date" onchange="refreshSeatLocks()" />
+
+    <!-- Student + Coupon -->
+    <div class="inline">
+      <div class="inline-item">
+        <label id="student-label">Are you a student?</label>
+        <select id="student">
+          <option value="no">No</option>
+          <option value="yes">Yes (20% discount)</option>
+        </select>
+      </div>
+      <div class="inline-item">
+        <label id="coupon-label">Coupon Code:</label>
+        <input type="text" id="coupon" placeholder="Enter code (DISCOUNT20)" />
+      </div>
+    </div>
+
+    <!-- Seat selection -->
+    <h3 id="seat-label">Select Seats:</h3>
+    <div class="bus-shell">
+      <div class="front-row">
+        <div class="driver">Driver</div>
+        <div class="exit">Exit</div>
+      </div>
+      <div id="busLayout" class="bus-layout"></div>
+      <div class="legend">
+        <span><span class="legend-box available"></span>Available</span>
+        <span><span class="legend-box selected"></span>Selected</span>
+        <span><span class="legend-box booked"></span>Booked</span>
+        <span><span class="legend-box student"></span>Student Seat</span>
+      </div>
+    </div>
+
+    <div class="feedback-section">
+      <h3>Give Feedback:</h3>
+      <textarea id="feedbackText" placeholder="Write your feedback here..." rows="4" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;"></textarea>
+      <button class="btn small-btn" onclick="submitFeedback()">Submit Feedback</button>
+
+      <h4>Feedback History:</h4>
+      <div id="feedbackHistory">
+        <p>No feedback yet.</p>
+      </div>
+    </div>
+
+    <!-- Payment -->
+    <button class="btn" onclick="proceedPayment()" id="proceedBtn">Proceed to Payment</button>
+
+    <!-- Summary -->
+    <div class="summary" id="summary">
+      <h3 id="history-label">Booking History</h3>
+      <p id="no-booking">No booking yet.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Initialize buses for default route on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const defaultRoute = document.getElementById('route').value.split('|')[0];
+      renderBuses(defaultRoute, document.getElementById('busList'));
+      showFeedback(defaultRoute);
+    });
+  </script>
+</body>
+</html>

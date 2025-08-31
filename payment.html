@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fake Payment</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- PDFMake for ticket generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2 id="pay-title">💳 Fake Payment</h2>
+
+    <div id="pay-summary" class="summary"></div>
+
+    <label id="method-label">Select Payment Method:</label>
+    <select id="payMethod">
+      <option value="bkash">bKash</option>
+      <option value="nagad">Nagad</option>
+      <option value="card">Card</option>
+      <option value="cod">Cash On Delivery</option>
+    </select>
+
+    <div class="inline">
+      <div class="inline-item">
+        <label id="tran-label">Transaction / Ref:</label>
+        <input type="text" id="tranRef" placeholder="Enter any mock ref" />
+      </div>
+      <div class="inline-item">
+        <label id="nameon-label">Name on Account:</label>
+        <input type="text" id="nameOn" placeholder="Your name" />
+      </div>
+    </div>
+
+    <button class="btn" onclick="confirmPayment()" id="confirmBtn">Confirm Payment</button>
+    <button class="btn ghost" onclick="cancelPayment()" id="cancelBtn">Cancel</button>
+
+    <div id="pay-note" class="note">This is a demo payment page. No real payment happens.</div>
+  </div>
+
+  <script src="payment.js"></script>
+</body>
+</html>
